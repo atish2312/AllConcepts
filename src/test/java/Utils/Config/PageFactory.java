@@ -3,14 +3,13 @@ package Utils.Config;
 import PageObjects.GUI;
 
 public class PageFactory extends BaseClass {
-    private GUI getGUIPages;
+    private  GUI getGUIPages;
 
-    public GUI getGetGUIPage()
+    public  GUI getGetGUIPage()
     {
         if (getGUIPages == null) {
             getGUIPages = new GUI();
         }
-
-        return getGUIPages;
+        return  getGUIPages;
     }
 }
