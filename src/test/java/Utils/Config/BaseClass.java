@@ -26,7 +26,7 @@ public class BaseClass {
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         pageFactory = new PageFactory();
-        driver.navigate().to(FetchProperties.getEnvironmentVariablePath("BaseURL"));
+        driver.get(FetchProperties.getEnvironmentVariablePath("BaseURl"));
     }
     @AfterClass
     public void logout(){

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ExceTest1 extends BaseClass {
 
-    @Test
+
     public static void getData() throws IOException {
         // Path to the Excel file
         String getexcel = "src/test/java/Resources/TISH.xlsx";

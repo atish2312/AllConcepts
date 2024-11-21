@@ -8,16 +8,15 @@ import java.util.Properties;
 public class FetchProperties {
 
     private static final String rootDir = System.getProperty("user.dir");
-
-    private static String environmentVariablePath = rootDir+"src/test/java/Utils/EnvironmentVariables.Properties";
-
-private static final Properties environmentVariable = new Properties();
+    private static final String environmentVariablePath = rootDir+"/src/test/java/Utils/EnvironmentVariables.Properties";
+    private static final Properties environmentVariable = new Properties();
 
 
-private  static void loadProperties(Properties prop , String filePath) {
+private  static void loadProperties(Properties file , String filePath) {
     try {
         InputStream ip = new FileInputStream(filePath);
-        prop.load(ip);
+        file.load(ip);
+
     } catch (Exception e) {
         throw new RuntimeException(e);
 
@@ -30,12 +29,4 @@ static{
 public static String getEnvironmentVariablePath(String key){
     return environmentVariable.getProperty(key);
 }
-
-
-
-
-
-
-
-
 }
