@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class GUILocators  extends BaseClass {
 
-    public static final By name = By.id("id=\"name\"");
+    public static final By name = By.id("name");
     public static final By email = By.id("email");
     public static final By phone = By.id("phone");
     public static final By address = By.id("textarea");

@@ -9,5 +9,6 @@ public class GUITest extends BaseClass{
 
     @Test
             public static void testGUI(){
-        pageFactory.getGetGUIPage().
+        pageFactory.getGetGUIPage().gui();
+    }
     }
