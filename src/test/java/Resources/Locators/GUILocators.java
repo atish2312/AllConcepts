@@ -14,6 +14,11 @@ public class GUILocators  extends BaseClass {
     public static final By female = By.id("female");
     public static final By selectingDays = By.id("sunday");
     public static final By country = By.id("country");
+    public static final By dateTime = By.id("datepicker");
+    public static final By singleFile = By.id("singleFileInput");
+
+
+
 
 
 
