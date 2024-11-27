@@ -8,14 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import javax.swing.*;
-import java.util.List;
-
 import java.util.List;
 
 
-
-public class GUI  extends BaseClass {
+public class GUI extends BaseClass {
 
 
     public void gui() {
@@ -49,44 +45,40 @@ public class GUI  extends BaseClass {
         CommonMethods.waitForElementClickable(By.xpath("//input[@id=\"datepicker\"]")).click();
 
 
+        String staticMonth = "April";
+        int staticYear = 2002;
 
-    String staticMonth = "April";
-    int staticYear = 2002;
 
 
-    // Assuming staticYear and staticMonth are set previously:
-    String month = CommonMethods.waitForElementClickable(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[1]")).getText();
-    int year = Integer.parseInt(driver.findElement(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[2]")).getText());
+        String month = CommonMethods.waitForElementClickable(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[1]")).getText();
+        int year = Integer.parseInt(driver.findElement(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[2]")).getText());
 
-    while(true)
+        while (true) {
 
-    {
 
-        // If the current year is less than the static year (2025), click "Next" to go forward
-        if (year < staticYear && !month.equals(staticMonth)) {
-            CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Next\"]")).click();
+            if (year < staticYear ||(year == staticYear &&  !month.equals(staticMonth))) {
+                CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Next\"]")).click();
+            }
+
+            else if (year > staticYear || (year == staticYear && !month.equals(staticMonth))) {
+                CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Prev\"]")).click();
+            }
+
+            // Re-fetch the current month and year after clicking a button to update the date picker
+            month = CommonMethods.waitForElementClickable(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[1]")).getText();
+            year = Integer.parseInt(driver.findElement(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[2]")).getText());
+
+            // If we've reached the correct month and year, exit the loop
+            if (year == staticYear && month.equals(staticMonth)) {
+                break;
+            }
+            System.out.println("Reached the target month: " + month + " and year: " + year);
+
+
+
+            CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
         }
-        // If the current year is greater than the static year (2025), click "Prev" to go back
-        else if (year > staticYear || (year == staticYear && !month.equals(staticMonth))) {
-            CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Prev\"]")).click();
-        }
-
-        // Re-fetch the current month and year after clicking a button to update the date picker
-        month = CommonMethods.waitForElementClickable(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[1]")).getText();
-        year = Integer.parseInt(driver.findElement(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[2]")).getText());
-
-        // If we've reached the correct month and year, exit the loop
-        if (year == staticYear && month.equals(staticMonth)) {
-            break;
-        }
-        System.out.println("Reached the target month: " + month + " and year: " + year);
-
-        Assert.assertEquals(staticYear, year);
-        Assert.assertEquals(staticMonth, month);
-
-        CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
     }
-}
 
 
     public void getMyLatest() {
@@ -105,32 +97,112 @@ public class GUI  extends BaseClass {
                 break;
             }
         }
-        if(!mymonth){
+        if (!mymonth) {
             Assert.fail();
         }
         WebElement year = driver.findElement(By.xpath("//*[@id=\"ui-datepicker-div\"]/div/div/select[2]"));
         Select myyear = new Select(year);
         List<WebElement> allYear = myyear.getOptions();
         Boolean allyear = false;
-        for(WebElement theYear : allYear){
-            if (theYear.getText().equals("2027")){
+        for (WebElement theYear : allYear) {
+            if (theYear.getText().equals("2027")) {
                 theYear.click();
-                allyear =true;
+                allyear = true;
                 break;
             }
         }
-        if (!allyear){
+        if (!allyear) {
             Assert.fail();
         }
     }
-    public void uploadFiles(){
-        CommonMethods method = new CommonMethods();
-        method
-        String file = "src/test/java/Resources/TISH.xlsx";
-        driver.findElement(By.xpath("//input[@type=\"file\"]")).sendKeys(file);
+
+    public void uploadFiles() {
+
+        String file = "/src/test/java/Resources/TISH.xlsx";
+        String mynewpath = CommonMethods.myPath(file);
+        System.out.println(mynewpath);
+
+        driver.findElement(By.xpath("//input[@type=\"file\"]")).sendKeys(mynewpath);
+
 
     }
+
+    public void uploadMultipleFile() {
+        String[] file = {"/src/test/java/Resources/TISH.xlsx", "/src/test/java/Resources/file-sample_150kB.pdf"};
+        for (String files : file) {
+            String fullpath = CommonMethods.myPath(files);
+            driver.findElement(By.xpath("//*[@id=\"multipleFilesInput\"]")).sendKeys(fullpath);
+        }
+
+    }
+
+    public void staticWebTable() {
+        String myData = "Learn Java Mukesh Java 500";
+        List<WebElement> rows = driver.findElements(By.xpath("//table[@name=\"BookTable\"]/tbody/tr"));
+        String name = null;
+        for (WebElement row : rows) {
+            String rowText = row.getText();
+            if (rowText.contains("Learn Java")) {
+                System.out.println(rowText);
+                name = rowText;
+                break;
+
+            }
+        }
+        Assert.assertEquals(myData, name);
+        Assert.assertNotNull(name);
+    }
+
+    public void dynamicTable() {
+        WebElement CPULOAD = driver.findElement(By.xpath("//div[@class=\"display-values\"]/p/strong"));
+        WebElement FireFox = driver.findElement(By.xpath("//div[@class=\"display-values\"]/p[2]/strong"));
+        String myCPULoad = CPULOAD.getText();
+        String MyFireFox = FireFox.getText();
+        String CPULoad = null;
+        List<WebElement> alltableData = driver.findElements(By.xpath("//table[@id=\"taskTable\"]/thead/tr/th"));
+        for (WebElement Mytable : alltableData) {
+            String head = Mytable.getText();
+            if (head.contains("Name")) {
+                List<WebElement> namerows = driver.findElements(By.xpath("//table[@id=\"taskTable\"]/tbody/tr/td[1]"));
+                for (WebElement myName : namerows) {
+                    String getName = myName.getText();
+                    if (getName.contains("Chrome")) {
+                        List<WebElement> cell = driver.findElements(By.xpath("//table[@id=\"taskTable\"]/tbody/tr//td"));
+                        for (WebElement mycell : cell) {
+                            String cellData = mycell.getText();
+                            if (cellData.contains(myCPULoad)) {
+                                CPULoad = cellData;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        System.out.println(myCPULoad);
+        Assert.assertEquals(myCPULoad, CPULoad);
+    }
+
+    public void paginationWebTable() {
+        List<WebElement> MySound = driver.findElements(By.xpath("//table[@id=\"productTable\"]/tbody/tr"));
+        for (WebElement check : MySound) {
+            String mycheck = check.getText();
+
+
+
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

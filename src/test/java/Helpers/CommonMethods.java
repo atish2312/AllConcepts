@@ -13,8 +13,11 @@ public class CommonMethods  extends BaseClass {
     public static WebElement waitForElementClickable(WebElement locator ){
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
-    public  myPath(String path){
-      return  System.getProperty("user.dir");
+    public static  String  myPath(String path){
+       String rootDir =  System.getProperty("user.dir");
+        return rootDir+path;
+
     }
+
 
 }

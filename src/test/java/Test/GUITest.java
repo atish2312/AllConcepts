@@ -10,7 +10,7 @@ public class GUITest extends BaseClass{
 
             public static void testGUI() throws InterruptedException {
 
-        pageFactory.getGetGUIPage().uploadFiles();
+      pageFactory.getGetGUIPage().gui();
 
     }
 
