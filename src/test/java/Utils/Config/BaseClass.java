@@ -1,6 +1,7 @@
 package Utils.Config;
 
 
+import Helpers.CommonMethods;
 import Helpers.FetchProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class BaseClass {
     public  static WebDriver driver;
@@ -19,11 +22,16 @@ public class BaseClass {
 
     @BeforeClass
     public void  initializeBrowser(){
+        String downloadPath = CommonMethods.myPath("/src/test/java/DownloadFolder");
+        String downloadMypath = "E:/My Daily Task/AllConcepts/src/test/java/DownloadFolder";
 
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
+        HashMap<String ,Object> chromeDownload = new HashMap<>();
+        chromeDownload.put("download.default_directory",downloadPath);
+        options.setExperimentalOption("prefs",chromeDownload);
         wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         pageFactory = new PageFactory();
         driver.get(FetchProperties.getEnvironmentVariablePath("BaseURl"));
