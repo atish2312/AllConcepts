@@ -45,22 +45,20 @@ public class GUI extends BaseClass {
         CommonMethods.waitForElementClickable(By.xpath("//input[@id=\"datepicker\"]")).click();
 
 
+        CommonMethods.waitForElementClickable(By.xpath("//input[@id=\"datepicker\"]")).click();
+
         String staticMonth = "April";
         int staticYear = 2002;
-
-
 
         String month = CommonMethods.waitForElementClickable(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[1]")).getText();
         int year = Integer.parseInt(driver.findElement(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[2]")).getText());
 
         while (true) {
 
-
-            if (year < staticYear ||(year == staticYear &&  !month.equals(staticMonth))) {
+            // Navigate to the correct year and month by comparing the target year and month
+            if (year < staticYear || (year == staticYear && !month.equals(staticMonth))) {
                 CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Next\"]")).click();
-            }
-
-            else if (year > staticYear || (year == staticYear && !month.equals(staticMonth))) {
+            } else if (year > staticYear || (year == staticYear && !month.equals(staticMonth))) {
                 CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Prev\"]")).click();
             }
 
@@ -72,13 +70,15 @@ public class GUI extends BaseClass {
             if (year == staticYear && month.equals(staticMonth)) {
                 break;
             }
+
+            // Print the current month and year for debugging
             System.out.println("Reached the target month: " + month + " and year: " + year);
-
-
-
-            CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
         }
+
+
+        CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
     }
+
 
 
     public void getMyLatest() {
@@ -187,6 +187,12 @@ public class GUI extends BaseClass {
         List<WebElement> MySound = driver.findElements(By.xpath("//table[@id=\"productTable\"]/tbody/tr"));
         for (WebElement check : MySound) {
             String mycheck = check.getText();
+            System.out.println(mycheck);
+            if(!mycheck.contains("19")){
+                for(int i = 0 i)
+            }
+
+
 
 
 
