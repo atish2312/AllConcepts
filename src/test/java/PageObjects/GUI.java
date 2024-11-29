@@ -50,12 +50,20 @@ public class GUI extends BaseClass {
         String staticMonth = "April";
         int staticYear = 2002;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
         String month = CommonMethods.waitForElementClickable(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[1]")).getText();
         int year = Integer.parseInt(driver.findElement(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[2]")).getText());
 
         while (true) {
 
+<<<<<<< HEAD
             // Navigate to the correct year and month by comparing the target year and month
+=======
+
+>>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
             if (year < staticYear || (year == staticYear && !month.equals(staticMonth))) {
                 CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Next\"]")).click();
             } else if (year > staticYear || (year == staticYear && !month.equals(staticMonth))) {
@@ -71,12 +79,20 @@ public class GUI extends BaseClass {
                 break;
             }
 
+<<<<<<< HEAD
             // Print the current month and year for debugging
             System.out.println("Reached the target month: " + month + " and year: " + year);
         }
 
 
         CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
+=======
+
+
+        }
+        CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
+        System.out.println("Reached the target month: " + month + " and year: " + year);
+>>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
     }
 
 
@@ -155,7 +171,7 @@ public class GUI extends BaseClass {
 
     public void dynamicTable() {
         WebElement CPULOAD = driver.findElement(By.xpath("//div[@class=\"display-values\"]/p/strong"));
-        WebElement FireFox = driver.findElement(By.xpath("//div[@class=\"display-values\"]/p[2]/strong"));
+        WebElement FireFox = driver.findElement(By.xpath("//div[@class='display-values']/p[2]/strong"));
         String myCPULoad = CPULOAD.getText();
         String MyFireFox = FireFox.getText();
         String CPULoad = null;
@@ -184,6 +200,7 @@ public class GUI extends BaseClass {
     }
 
     public void paginationWebTable() {
+<<<<<<< HEAD
         List<WebElement> MySound = driver.findElements(By.xpath("//table[@id=\"productTable\"]/tbody/tr"));
         for (WebElement check : MySound) {
             String mycheck = check.getText();
@@ -193,12 +210,67 @@ public class GUI extends BaseClass {
             }
 
 
+=======
+        boolean found = false;
+>>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
 
+        while (!found) {
 
+            List<WebElement> myAllRows = driver.findElements(By.xpath("//table[@id='productTable']/tbody/tr"));
+            for (WebElement row : myAllRows) {
+                String rowText = row.findElement(By.xpath("./td[1]")).getText();
+                if (rowText.equals("8")) {
+                    row.findElement(By.xpath(".//input[@type='checkbox']")).click();
+                    System.out.println("Found and selected row: " + row.getText());
+                    found = true;
+                    break;
+                }
+            }
 
+            if (!found) {
+                List<WebElement> pagination = driver.findElements(By.xpath("//ul[@class='pagination']/li"));
+                for (int i = 1; i <= pagination.size(); i++) {
+                    WebElement pageLink = driver.findElement(By.xpath("//ul[@class='pagination']/li[" + i + "]/a"));
+                    if (pageLink.getAttribute("class").contains("active")) {
+                        continue;
+                    }
+                    pageLink.click();
+                    break;
+                }
+            }
         }
     }
+
+    public void footerLinks(){
+        driver.findElement(By.linkText("Home")).click();
+    }
+
+    public void HiddenElements(){
+        driver.findElement(By.linkText("Hidden Elements & AJAX")).click();
+        CommonMethods.waitForElementClickable(By.xpath("//div[@id=\"container\"]/input[1]")).sendKeys("tester");
+        WebElement input2 =  driver.findElement(By.xpath("//div[@id=\"container\"]/input[2]"));
+        WebElement input2Hidden = driver.findElement(By.xpath("//button[text()=\"Toggle Input Box 2\"]"));
+        if (input2.getAttribute("class").contains("hidden")) {
+            input2Hidden.click();
+
+        }
+        input2.sendKeys("tester");
+      String mytext =   driver.findElement(By.xpath("//*[@id=\"container\"]/div[1]/span")).getText();
+      System.out.println(mytext);
+      driver.findElement(By.xpath("//button[text()=\"Load AJAX Content\"]")).click();
+        CommonMethods.waitLoadTest1(By.xpath("//div[@id=\"ajaxContent\"]/h2"));
+    }
+
+    public void downloadFile(){
+        CommonMethods.waitForElementClickable(By.linkText("Download Files")).click();
+        CommonMethods.waitForElementClickable(By.xpath("//textarea[@id=\"inputText\"]")).sendKeys("tester1");
+        driver.findElement(By.xpath("//button[@id=\"generateTxt\"]")).click();
+        CommonMethods.waitForElementClickable(By.linkText("Download Text File")).click();
+    }
+
 }
+
+
 
 
 

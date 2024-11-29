@@ -7,17 +7,28 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CommonMethods  extends BaseClass {
 
+
     public static WebElement waitForElementClickable(By locator ){
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
     public static WebElement waitForElementClickable(WebElement locator ){
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
+
     }
+    public static WebElement waitLoadTest(WebElement locator) {
+        return wait.until(ExpectedConditions.visibilityOf(locator));
+    }
+    public static WebElement waitLoadTest1(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+
     public static  String  myPath(String path){
        String rootDir =  System.getProperty("user.dir");
         return rootDir+path;
 
     }
+
 
 
 }
