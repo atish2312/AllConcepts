@@ -50,20 +50,14 @@ public class GUI extends BaseClass {
         String staticMonth = "April";
         int staticYear = 2002;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
         String month = CommonMethods.waitForElementClickable(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[1]")).getText();
         int year = Integer.parseInt(driver.findElement(By.xpath("//div[@class=\"ui-datepicker-title\"]/span[2]")).getText());
 
         while (true) {
 
-<<<<<<< HEAD
-            // Navigate to the correct year and month by comparing the target year and month
-=======
 
->>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
+
             if (year < staticYear || (year == staticYear && !month.equals(staticMonth))) {
                 CommonMethods.waitForElementClickable(By.xpath("//span[text()=\"Next\"]")).click();
             } else if (year > staticYear || (year == staticYear && !month.equals(staticMonth))) {
@@ -78,21 +72,10 @@ public class GUI extends BaseClass {
             if (year == staticYear && month.equals(staticMonth)) {
                 break;
             }
-
-<<<<<<< HEAD
-            // Print the current month and year for debugging
-            System.out.println("Reached the target month: " + month + " and year: " + year);
-        }
-
-
-        CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
-=======
-
-
         }
         CommonMethods.waitForElementClickable(By.xpath("//table[@class=\"ui-datepicker-calendar\"]/tbody/tr/td/a[text()=\"4\"]")).click();
         System.out.println("Reached the target month: " + month + " and year: " + year);
->>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
+
     }
 
 
@@ -200,19 +183,8 @@ public class GUI extends BaseClass {
     }
 
     public void paginationWebTable() {
-<<<<<<< HEAD
-        List<WebElement> MySound = driver.findElements(By.xpath("//table[@id=\"productTable\"]/tbody/tr"));
-        for (WebElement check : MySound) {
-            String mycheck = check.getText();
-            System.out.println(mycheck);
-            if(!mycheck.contains("19")){
-                for(int i = 0 i)
-            }
-
-
-=======
         boolean found = false;
->>>>>>> b05953b4e50afee60ce121862a91d124ec19cc48
+
 
         while (!found) {
 

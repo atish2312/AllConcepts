@@ -22,15 +22,16 @@ public class BaseClass {
 
     @BeforeClass
     public void  initializeBrowser(){
-        String downloadPath = CommonMethods.myPath("/src/test/java/DownloadFolder");
-        String downloadMypath = "E:/My Daily Task/AllConcepts/src/test/java/DownloadFolder";
+        String downloadPath = CommonMethods.myPath("/src/test/java/DownloadPath");
+        String path = "C:\\TotalConcepts\\SeleniumPractice\\src\\test\\java\\DownloadPath";
+
 
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
         HashMap<String ,Object> chromeDownload = new HashMap<>();
-        chromeDownload.put("download.default_directory",downloadPath);
+        chromeDownload.put("download.default_directory",path);
         options.setExperimentalOption("prefs",chromeDownload);
         wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         pageFactory = new PageFactory();
