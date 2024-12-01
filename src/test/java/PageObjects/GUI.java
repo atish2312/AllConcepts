@@ -4,6 +4,8 @@ import Helpers.CommonMethods;
 import Resources.Locators.GUILocators;
 import Utils.Config.BaseClass;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -238,6 +240,29 @@ public class GUI extends BaseClass {
         CommonMethods.waitForElementClickable(By.xpath("//textarea[@id=\"inputText\"]")).sendKeys("tester1");
         driver.findElement(By.xpath("//button[@id=\"generateTxt\"]")).click();
         CommonMethods.waitForElementClickable(By.linkText("Download Text File")).click();
+    }
+    public void wikipedia(){
+       WebElement wikipedia =  CommonMethods.waitForElementClickable(By.xpath("//input[@class=\"wikipedia-search-input\"]"));
+       wikipedia.sendKeys("test");
+       wikipedia.sendKeys(Keys.ENTER);
+
+        List<WebElement>link = driver.findElements(By.xpath("//div[@id='wikipedia-search-result-link']/a"));
+        boolean found = false;
+        for(WebElement alllink : link){
+            String mylink = alllink.getText();
+            System.out.println(mylink);
+            if (mylink.equals("Test cricket")){
+                JavascriptExecutor js = (JavascriptExecutor)driver;
+                js.executeScript("arguments[0].click();",alllink);
+                found = true;
+                break;
+            }
+
+        }
+        if(!found){
+            Assert.fail();
+        }
+
     }
 
 }

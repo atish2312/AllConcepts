@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeClass;
 
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Objects;
+
 
 public class BaseClass {
     public  static WebDriver driver;
@@ -22,17 +22,23 @@ public class BaseClass {
 
     @BeforeClass
     public void  initializeBrowser(){
+<<<<<<< HEAD
         String downloadPath = CommonMethods.myPath("/src/test/java/DownloadPath");
         String path = "C:\\TotalConcepts\\SeleniumPractice\\src\\test\\java\\DownloadPath";
+=======
+        String downloadPath = CommonMethods.myPath("/src/test/java/DownloadFolder");
+        String myDownload = "E:\\My Daily Task\\AllConcepts\\src\\test\\java\\DownloadFolder";
+>>>>>>> c8924ef06ba1036819b926ac6464a26f9b1d8745
 
 
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
-        driver = new ChromeDriver(options);
+        System.out.println(downloadPath);
         HashMap<String ,Object> chromeDownload = new HashMap<>();
         chromeDownload.put("download.default_directory",path);
         options.setExperimentalOption("prefs",chromeDownload);
+        driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         pageFactory = new PageFactory();
         driver.get(FetchProperties.getEnvironmentVariablePath("BaseURl"));

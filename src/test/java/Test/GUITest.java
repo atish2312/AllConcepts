@@ -10,8 +10,12 @@ public class GUITest extends BaseClass{
 
             public static void testGUI() throws InterruptedException {
 
+<<<<<<< HEAD
 
       pageFactory.getGetGUIPage().downloadFile();
+=======
+      pageFactory.getGetGUIPage().wikipedia();
+>>>>>>> c8924ef06ba1036819b926ac6464a26f9b1d8745
 
 
 
