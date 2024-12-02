@@ -3,17 +3,21 @@ package PageObjects;
 import Helpers.CommonMethods;
 import Resources.Locators.GUILocators;
 import Utils.Config.BaseClass;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import javax.swing.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+import java.util.Set;
 
 
 public class GUI extends BaseClass {
+  public   Actions actions = new Actions(driver);
 
 
     public void gui() {
@@ -264,6 +268,116 @@ public class GUI extends BaseClass {
         }
 
     }
+    public void alerts(){
+
+        driver.findElement(By.xpath("//button[text()=\"Simple Alert\"]")).click();
+       Alert alert  = wait.until(ExpectedConditions.alertIsPresent());
+        alert.accept();
+        driver.switchTo().defaultContent();
+        WebElement mytext = driver.findElement(By.xpath("//p[@id=\"demo\"]"));
+        System.out.println(mytext.getText());
+        driver.findElement(By.xpath("//button[text()='Confirmation Alert']")).click();
+        System.out.println(alert.getText());
+        alert.dismiss();
+        System.out.println(driver.findElement(By.xpath("//p[@id=\"demo\"]")).getText());
+
+        driver.findElement(By.xpath("//button[text()=\"Prompt Alert\"]")).click();
+        alert.sendKeys("Atish");
+        System.out.println(alert.getText());
+        alert.accept();
+        System.out.println(driver.findElement(By.xpath("//p[@id=\"demo\"]")).getText());
+    }
+    public void mytab() {
+        String currentWindow = driver.getWindowHandle();
+        driver.findElement(By.xpath("//button[@id='PopUp']")).click();
+        driver.quit();
+        Set<String> mytables = driver.getWindowHandles();
+        for (String all : mytables) {
+            if (!mytables.equals(currentWindow)) {
+                driver.switchTo().window(currentWindow);
+            }
+
+        }
+    }
+    public void dragAndDrop(){
+        Actions actions = new Actions(driver);
+        WebElement drag = driver.findElement(By.xpath("//div[@id='draggable']"));
+        WebElement drop = driver.findElement(By.xpath("//div[@id='droppable']"));
+        actions.dragAndDrop(drag,drop).perform();
+        WebElement get = driver.findElement(By.xpath("//div[@id='droppable']/p"));
+        System.out.println(get.getText());
+    }
+    public void Slider() throws InterruptedException {
+       // WebElement slider = driver.findElement(By.xpath("//input[@type='range']"));
+
+        // Initialize Actions class
+        Actions actions = new Actions(driver);
+     WebElement pop  =   driver.findElement(By.xpath("//div[@id='slider-range']/span[2]"));
+
+    Thread.sleep(2000);
+        // Drag the slider to the right (50 pixels as an example)
+        actions.dragAndDropBy(pop, 302, 0).perform();
+
+      WebElement priceRange = driver.findElement(By.xpath("//input[@id='amount']"));
+        System.out.println("Updated Price Range: " + priceRange.getText());
+    }
+    public void dropDown(){
+        driver.findElement(By.xpath("//input[@id=\"comboBox\"]")).click();
+        List<WebElement> alldown = driver.findElements(By.xpath("//div[@id=\"dropdown\"]/div"));
+        boolean found = false;
+
+        for (WebElement my : alldown) {
+            System.out.println(my.getText());
+            if (my.getText().equals("Item 46"))
+            {
+                my.click();
+                found = true;
+                break;
+
+            }
+
+        }
+
+    }
+
+    public void getLink(){
+        List<WebElement> alllink = driver.findElements(By.tagName("a"));
+        System.out.println(alllink.size());
+        for (WebElement all : alllink){
+            String link = all.getAttribute("href");
+            if (link == null || link.isEmpty()){
+                System.out.println(link);
+                continue;
+            }
+            try{
+                HttpURLConnection connection = (HttpURLConnection) new URL(link).openConnection();
+                connection.setRequestMethod("HEAD");
+                connection.connect();
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode >= 400){
+                    System.out.println("broken link "+responseCode + link);
+                }
+                else {
+                    System.out.println("valid link"+responseCode);
+                }
+
+            } catch (Exception e) {
+                System.out.println(link+"due expection"+e.getMessage());
+            }
+
+        }
+    }
+    public void shawdowDom(){
+
+        WebElement shadow = driver.findElement(By.xpath("//div[@id=\"shadow_host\"]"));
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        WebElement shadow1 = (WebElement) js.executeScript("return arguments[0].shadowRoot",shadow);
+
+        WebElement shadowElement = shadow1.findElement(By.cssSelector())
+
+    }
+
 
 }
 
